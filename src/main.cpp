@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <RCSwitch.h>
 #include <ESP8266WiFi.h>
+
 #include <PubSubClient.h>
 #include <string> 
 
@@ -8,6 +9,8 @@ const char*  wifiSSID="Faiza";
 const char*  wifiPassword="faizafaiza";
 const char* mqttBroker = "broker.hivemq.com";
 const char* topic_to_publish = "Smart_Home/test";
+const int rf = 0;
+
 
 WiFiClient WIFI_CLIENT;
 PubSubClient MQTT_CLIENT;
@@ -25,7 +28,7 @@ void setup() {
   }
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
-  mySwitch.enableReceive(0);  // Connect To GPIO0 (D3) On The ESP
+  mySwitch.enableReceive(rf);  // Connect To GPIO0 (D3) On The ESP
 }
 
 void loop() {
