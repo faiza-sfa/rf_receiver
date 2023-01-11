@@ -16,7 +16,7 @@ WiFiClient WIFI_CLIENT;
 PubSubClient MQTT_CLIENT;
 RCSwitch mySwitch = RCSwitch();
 
-void reconnect() ;
+void mqtt_connect() ;
 
 void setup() {
 
@@ -28,6 +28,7 @@ void setup() {
   }
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
+  mqtt_connect() ;
   mySwitch.enableReceive(rf);  // Connect To GPIO0 (D3) On The ESP
 }
 
@@ -47,14 +48,14 @@ void loop() {
   // Check if we're connected to the MQTT broker
   if (!MQTT_CLIENT.connected()) {
     // If we're not, attempt to reconnect
-    reconnect();
+    mqtt_connect();
   }
 
   mySwitch.resetAvailable();
 
   }
 
-void reconnect() {
+void mqtt_connect() {
   // Set our MQTT broker address and port
   MQTT_CLIENT.setServer(mqttBroker, 1883);
   MQTT_CLIENT.setClient(WIFI_CLIENT);
